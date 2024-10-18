@@ -149,8 +149,9 @@ export default async function init({
   cornerstoneTools.segmentation.config.setGlobalRepresentationConfig(labelmapRepresentation, {
     fillAlpha: 0.5,
     fillAlphaInactive: 0.2,
-    outlineOpacity: 1,
-    outlineOpacityInactive: 0.65,
+    outlineWidthActive: 1,
+    outlineOpacity: 0.6,
+    outlineOpacityInactive: 0.3,
   });
 
   cornerstoneTools.segmentation.config.setGlobalRepresentationConfig(contourRepresentation, {
