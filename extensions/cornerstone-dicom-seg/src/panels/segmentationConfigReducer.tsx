@@ -2,10 +2,10 @@
 const initialState = {
   renderOutline: true,
   renderFill: true,
-  outlineOpacity: 0.9,
-  outlineWidth: 3,
-  fillOpacity: 0.9,
-  fillOpacityInactive: 0.8,
+  outlineOpacity: 0.6,
+  outlineWidth: 1,
+  fillOpacity: 0.5,
+  fillOpacityInactive: 0.2,
   renderInactiveSegmentations: true,
 };
 

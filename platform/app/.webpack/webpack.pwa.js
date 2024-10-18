@@ -20,7 +20,6 @@ const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 const APP_CONFIG = process.env.APP_CONFIG || 'config/default.js';
 const PROXY_TARGET = process.env.PROXY_TARGET;
 const PROXY_DOMAIN = process.env.PROXY_DOMAIN;
-const OHIF_PORT = Number(process.env.OHIF_PORT || 3000);
 const ENTRY_TARGET = process.env.ENTRY_TARGET || `${SRC_DIR}/index.js`;
 const Dotenv = require('dotenv-webpack');
 const writePluginImportFile = require('./writePluginImportsFile.js');
@@ -35,8 +34,6 @@ const setHeaders = (res, path) => {
   }
   if (path.indexOf('.pdf') !== -1) {
     res.setHeader('Content-Type', 'application/pdf');
-  } else if (path.indexOf('mp4') !== -1) {
-    res.setHeader('Content-Type', 'video/mp4');
   } else if (path.indexOf('frames') !== -1) {
     res.setHeader('Content-Type', 'multipart/related');
   } else {
@@ -72,6 +69,8 @@ module.exports = (env, argv) => {
         // Hoisted Yarn Workspace Modules
         path.resolve(__dirname, '../../../node_modules'),
         SRC_DIR,
+        path.resolve(__dirname, '../extensions/extension-dcm-seg-plus/node_modules'),
+        path.resolve(__dirname, '../modes/segmentation-plus/node_modules'),
       ],
     },
     plugins: [
@@ -104,17 +103,13 @@ module.exports = (env, argv) => {
             to: `${DIST_DIR}/app-config.js`,
           },
           // Copy Dicom Microscopy Viewer build files
-          // This is in pluginCOnfig.json now
-          // {
-          //   from: '../../../node_modules/dicom-microscopy-viewer/dist/dynamic-import',
-          //   to: DIST_DIR,
-          //   globOptions: {
-          //     ignore: ['**/*.min.js.map'],
-          //   },
-          //   // The dicom-microscopy-viewer is optional, so if it doeesn't get
-          //   // installed, it shouldn't cause issues.
-          //   noErrorOnMissing: true,
-          // },
+          {
+            from: '../../../node_modules/dicom-microscopy-viewer/dist/dynamic-import',
+            to: DIST_DIR,
+            globOptions: {
+              ignore: ['**/*.min.js.map'],
+            },
+          },
           // Copy dicom-image-loader build files
           {
             from: '../../../node_modules/@cornerstonejs/dicom-image-loader/dist/dynamic-import',
@@ -150,12 +145,12 @@ module.exports = (env, argv) => {
       // http2: true,
       // https: true,
       open: true,
-      port: OHIF_PORT,
+      port: 3000,
       client: {
         overlay: { errors: true, warnings: false },
       },
       proxy: {
-        '/dicomweb': 'http://localhost:5000',
+        '/dicomweb': 'http://localhost:8042/dicom-web',
       },
       static: [
         {
