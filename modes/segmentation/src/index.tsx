@@ -20,10 +20,10 @@ const cornerstone = {
 };
 
 const segmentation = {
-  panel: 'extension-dcm-seg-plus.panelModule.panelSegmentation',
-  panelTool: 'extension-dcm-seg-plus.panelModule.panelSegmentationWithTools',
-  sopClassHandler: 'extension-dcm-seg-plus.sopClassHandlerModule.dicom-seg',
-  viewport: 'extension-dcm-seg-plus.viewportModule.dicom-seg',
+  panel: '@ohif/extension-cornerstone-dicom-seg.panelModule.panelSegmentation',
+  panelTool: '@ohif/extension-cornerstone-dicom-seg.panelModule.panelSegmentationWithTools',
+  sopClassHandler: '@ohif/extension-cornerstone-dicom-seg.sopClassHandlerModule.dicom-seg',
+  viewport: '@ohif/extension-cornerstone-dicom-seg.viewportModule.dicom-seg',
 };
 
 /**
@@ -33,7 +33,7 @@ const segmentation = {
 const extensionDependencies = {
   '@ohif/extension-default': '^3.0.0',
   '@ohif/extension-cornerstone': '^3.0.0',
-  //'@ohif/extension-cornerstone-dicom-seg': '^3.0.0',
+  '@ohif/extension-cornerstone-dicom-seg': '^3.0.0',
 };
 
 function modeFactory({ modeConfiguration }) {

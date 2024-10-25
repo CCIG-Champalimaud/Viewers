@@ -61,10 +61,6 @@
       "packageName": "@ohif/extension-cornerstone-dicom-rt",
       "default": false,
       "version": "3.0.0"
-    },
-    {
-      "packageName": "extension-dcm-seg-plus",
-      "version": "0.1.0"
     }
   ],
   "modes": [
@@ -92,10 +88,6 @@
       "packageName": "@ohif/mode-basic-dev-mode",
       "default": false,
       "version": "3.0.0"
-    },
-    {
-      "packageName": "segmentation-plus",
-      "version": "0.1.0"
     }
   ],
   "public": [
