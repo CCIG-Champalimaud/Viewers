@@ -17,3 +17,7 @@
      when the magnify tool is near the sides/corners of the page */
   overflow: hidden;
 }
+.cornerstone-viewport-element > .viewport-element{
+  min-width: 1px!important;
+  min-height: 1px!important;
+}
