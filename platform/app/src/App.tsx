@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import i18n from '@ohif/i18n';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter } from 'react-router-dom';
+import RouteChangeListener from './RouteChangeListener'
 import Compose from './routes/Mode/Compose';
 import {
   ExtensionManager,
@@ -159,6 +160,7 @@ function App({
   return (
     <CombinedProviders>
       <BrowserRouter basename={routerBasename}>
+        <RouteChangeListener />
         {authRoutes}
         {appRoutes}
       </BrowserRouter>
