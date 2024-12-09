@@ -57,10 +57,6 @@ if (!process.env.APP_CONFIG) {
 }
 
 module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
-  if (!process.env.NODE_ENV) {
-    throw new Error('process.env.NODE_ENV not set');
-  }
-
   const mode = NODE_ENV === 'production' ? 'production' : 'development';
   const isProdBuild = NODE_ENV === 'production';
   const isQuickBuild = QUICK_BUILD === 'true';
@@ -98,7 +94,7 @@ module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
       type: 'filesystem',
     },
     module: {
-      noParse: [/(codec)/, /(dicomicc)/],
+      noParse: [/(dicomicc)/],
       rules: [
         ...(isProdBuild
           ? []
@@ -108,7 +104,7 @@ module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: {
-                  plugins: ['react-refresh/babel'],
+                  plugins: isProdBuild ? [] : ['react-refresh/babel'],
                 },
               },
             ]),
@@ -143,11 +139,6 @@ module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
               },
             },
           ],
-        },
-        {
-          test: /\.js$/,
-          enforce: 'pre',
-          use: 'source-map-loader',
         },
         transpileJavaScriptRule(mode),
         loadWebWorkersRule,
@@ -188,8 +179,8 @@ module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
         '@hooks': path.resolve(__dirname, '../platform/app/src/hooks'),
         '@routes': path.resolve(__dirname, '../platform/app/src/routes'),
         '@state': path.resolve(__dirname, '../platform/app/src/state'),
-        '@cornerstonejs/dicom-image-loader':
-          '@cornerstonejs/dicom-image-loader/dist/dynamic-import/cornerstoneDICOMImageLoader.min.js',
+        'dicom-microscopy-viewer':
+          'dicom-microscopy-viewer/dist/dynamic-import/dicomMicroscopyViewer.min.js',
       },
       // Which directories to search when resolving modules
       modules: [
@@ -217,7 +208,7 @@ module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
       }),
-      ...(isProdBuild ? [] : [new ReactRefreshWebpackPlugin()]),
+      ...(isProdBuild ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })]),
       // Uncomment to generate bundle analyzer
       // new BundleAnalyzerPlugin(),
     ],

@@ -17,7 +17,6 @@ import {
   DialogProvider,
   Modal,
   ModalProvider,
-  SnackbarProvider,
   ThemeWrapper,
   ViewportDialogProvider,
   ViewportGridProvider,
@@ -25,7 +24,11 @@ import {
   UserAuthenticationProvider,
   ToolboxProvider,
 } from '@ohif/ui';
-import { ThemeWrapper as ThemeWrapperNext } from '@ohif/ui-next';
+import {
+  ThemeWrapper as ThemeWrapperNext,
+  NotificationProvider,
+  TooltipProvider,
+} from '@ohif/ui-next';
 // Viewer Project
 // TODO: Should this influence study list?
 import { AppConfigProvider } from '@state';
@@ -89,17 +92,19 @@ function App({
   const canvas = document.createElement('canvas');
   const gl = canvas.getContext('webgl2');
 
-  const max3DTextureSize = gl.getParameter(gl.MAX_3D_TEXTURE_SIZE);
-  appConfigState.max3DTextureSize = max3DTextureSize;
+  if (gl) {
+    const max3DTextureSize = gl.getParameter(gl.MAX_3D_TEXTURE_SIZE);
+    appConfigState.max3DTextureSize = max3DTextureSize;
+  }
 
   const {
     uiDialogService,
     uiModalService,
-    uiNotificationService,
     uiViewportDialogService,
     viewportGridService,
     cineService,
     userAuthenticationService,
+    uiNotificationService,
     customizationService,
   } = servicesManager.services;
 
@@ -113,8 +118,8 @@ function App({
     [ViewportGridProvider, { service: viewportGridService }],
     [ViewportDialogProvider, { service: uiViewportDialogService }],
     [CineProvider, { service: cineService }],
-    // [NotificationProvider, { service: uiNotificationService }],
-    [SnackbarProvider, { service: uiNotificationService }],
+    [NotificationProvider, { service: uiNotificationService }],
+    [TooltipProvider],
     [DialogProvider, { service: uiDialogService }],
     [ModalProvider, { service: uiModalService, modal: Modal }],
     [ShepherdJourneyProvider],
