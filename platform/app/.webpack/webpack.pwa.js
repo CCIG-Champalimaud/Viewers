@@ -78,15 +78,7 @@ module.exports = (env, argv) => {
         // Hoisted Yarn Workspace Modules
         path.resolve(__dirname, '../../../node_modules'),
         SRC_DIR,
-        path.resolve(
-          __dirname,
-          '/Users/helghast/projects/ohif/extensions/cliniti-dicom-seg/node_modules'
-        ),
-        path.resolve(__dirname, '../modes/cliniti-segmentation/node_modules'),
-        path.resolve(__dirname, '../extensions/cliniti-dicom-seg/node_modules'),
-        path.resolve(__dirname, '../modes/cliniti-segmentation/node_modules'),
-        path.resolve(__dirname, '../extensions/cliniti-dicom-seg/node_modules'),
-        path.resolve(__dirname, '../modes/cliniti-segmentation/node_modules'),
+
         path.resolve(__dirname, '../extensions/cliniti-dicom-seg/node_modules'),
         path.resolve(__dirname, '../modes/cliniti-segmentation/node_modules'),
       ],

@@ -36,6 +36,7 @@ import createRoutes from './routes';
 import appInit from './appInit.js';
 import OpenIdConnectRoutes from './utils/OpenIdConnectRoutes';
 import { ShepherdJourneyProvider } from 'react-shepherd';
+//import { initializePostMessageListener } from './postMessageHandler'
 
 let commandsManager: CommandsManager,
   extensionManager: ExtensionManager,
@@ -161,6 +162,9 @@ function App({
       />
     );
   }
+
+  // Initialize the postMessage listener
+  //initializePostMessageListener(servicesManager.services)
 
   return (
     <CombinedProviders>
