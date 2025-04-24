@@ -55,3 +55,12 @@
 .invisible-scrollbar::-webkit-scrollbar-thumb:window-inactive {
   @apply hidden;
 }
+@media (max-width: 650px) {
+  .logo-component {
+    display: none!important;
+  }
+}
+html, body {
+  background-color: black;
+  margin: 0;
+}
