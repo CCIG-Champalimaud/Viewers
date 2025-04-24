@@ -56,3 +56,12 @@ tests/test-results/
 tests/playwright-report/
 /blob-report/
 /playwright/.cache/
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
