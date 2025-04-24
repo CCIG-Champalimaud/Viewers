@@ -110,6 +110,18 @@ function Local({ modePath }: LocalProps) {
     };
   }, []);
 
+
+  useEffect(() => {
+    function handler(e) {
+      // Optionally store files in a global store/context here
+      //window.__OHIF_LOCAL_FILES__ = e.detail.files;
+      navigate('/');
+    }
+    window.addEventListener('ohif:navigateWithFiles', handler);
+    return () => window.removeEventListener('ohif:navigateWithFiles', handler);
+  }, [navigate]);
+
+
   return (
     <Dropzone
       ref={dropzoneRef}

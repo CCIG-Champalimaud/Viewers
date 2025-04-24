@@ -1,4 +1,7 @@
-export function initializePostMessageListener(services) {
+import filesToStudies from './routes/Local/filesToStudies';
+
+
+export function initializePostMessageListener(services, dataSources) {
 
   function handlePostMessage(event: MessageEvent) {
 
@@ -72,6 +75,34 @@ export function initializePostMessageListener(services) {
         hangingProtocolService.setProtocol(protocol.id)
 
         console.log(`Protocol ${protocol.id} added and activated successfully for OHIF ID: ${ohifId}`)
+
+      } else if(type === 'ohif.fileLoad') {
+
+        const files = payload?.files
+
+        if (files?.length) {
+
+          const localDataSource = dataSources.find(ds => ds.sourceName === 'dicomlocal')
+
+          filesToStudies(files, localDataSource).then(studies => {
+            console.log('Loaded studies:', studies)
+
+            const query = new URLSearchParams()
+            // Todo: navigate to work list and let user select a mode
+            studies.forEach(id => query.append('StudyInstanceUIDs', id))
+            query.append('datasources', 'dicomlocal');
+            console.log('navigate to:', `/cliniti?${decodeURIComponent(query.toString())}`)
+            const url = `/viewer?${decodeURIComponent(query.toString())}`
+
+            // Dispatch a custom event with the files and URL
+            window.dispatchEvent(
+              new CustomEvent('ohif:navigateWithFiles', {
+                detail: { files, url }
+              })
+            )
+          })
+        }
+
 
       } else {
         console.warn('Unrecognized message type or missing required fields')
